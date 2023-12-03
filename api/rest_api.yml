@@ -269,7 +269,7 @@ paths:
     get:
       tags:
         - post
-      summary: View post feed
+      summary: View posts
       operationId: viewPostFeed
       parameters:
         - name: profile_id
@@ -279,7 +279,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Post feed viewed successfully
+          description: Posts viewed successfully
           content:
             application/json:
               schema:
@@ -362,7 +362,7 @@ paths:
                        status:
                          type: string
 
-  /profile/{profile_id}/chat/{chat_id}:
+  /profile/{profile_id}/chat/{chat_id}/messages:
     post:
       tags:
         - chat
@@ -434,7 +434,7 @@ paths:
                        status:
                          type: string
 
-  /user/{user_id}/chat/{chat_id}:
+  /user/{user_id}/chat/{chat_id}/messages:
     get:
       tags:
        - chat

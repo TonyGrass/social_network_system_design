@@ -15,7 +15,7 @@ Table users {
   id integer [primary key]
   name varchar
   description text
-  photo media
+  photo integer
   city varchar
   interests text
   created_at timestamp
@@ -60,7 +60,7 @@ Table posts {
   id integer [primary key]
   user_id integer
   description text
-  media text [note: 'Link to content']
+  media integer [note: 'Link to content']
   likes integer
   views integer
   created_at timestamp
@@ -110,3 +110,4 @@ Ref: users.id < friends.friend1_id
 Ref: users.id < friends.friend2_id
 
 Ref: posts.media - some_media_store.id
+Ref: users.photo - some_media_store.id

@@ -1,2 +1,21 @@
 # social_network_system_design
-System Design of a social network for an educational course - [link](https://balun.courses/courses/system_design)
+System design of a social network for an educational course - [System Design by Balun.Courses](https://balun.courses/courses/system_design)
+
+### Описание:
+Необходимо спроектировать API для социальной сети по следущим требованиям:
+1) добавление друзей;
+2) удаление друзей;
+3) просмотр друзей пользователя;
+4) просмотр анкеты пользователя;
+5) публикация поста в ленту;
+6) загрузка медиа файлов для постов;
+7) просмотр ленты постов (домашней и пользователей);
+8) просмотр диалогов и чатов пользователя;
+9) отправка сообщений в диалоги и чаты;
+10) чтение сообщений в диалогах и чатах.
+
+Описание эндпоинтов представлено в соответствиии с спецификацией OpenAPI в файле /api/rest_api.yml.
+
+Скопируйте содержимое файла в [Swagger Online Editor](https://editor.swagger.io/) и будьте готовы испытать невероятные ощущения от соприкосновения с моим творчеством.
+
+P.S.: там будут ошибки, нажмите кнопку HIDE :)

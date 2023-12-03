@@ -1,0 +1,487 @@
+openapi: 3.0.3
+info:
+  title: System design of a social network - OpenAPI 3.0
+  description: |-
+    System design of a social network for an educational course - [System Design by Balun.Courses](https://balun.courses/courses/system_design)
+    - добавление друзей;
+    - удаление друзей;
+    - просмотр друзей пользователя;
+    - просмотр анкеты пользователя;
+    - публикация поста в ленту;
+    - загрузка медиа файлов для постов;
+    - просмотр ленты постов (*домашней и пользователей)*;
+    - просмотр диалогов и чатов пользователя;
+    - отправка сообщений в диалогах и чатах;
+    - чтение сообщений в диалогах и чатах.
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.0
+servers:
+  - url: https://noname.social.network/api/v1
+tags:
+  - name: profile
+    description: for work with the Profile entity
+  - name: friend
+    description: for work with the Friend entity
+  - name: post
+    description: for work with the Post entity
+  - name: chat
+    description: for work with the Chat entity
+paths:
+  /profile/{profile_id}/friend/{friend_id}:
+    post:
+      tags:
+        - friend
+      summary: Add a friend
+      operationId: addFriend
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: friend_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Friend added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  friendship_id:
+                   type: string
+                  result:
+                   type: string
+    delete:
+      tags:
+        - friend
+      summary: Remove a friend
+      operationId: removeFriend
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: friend_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Friend removed successfully
+          content:
+            application/json:
+             schema:
+                type: object
+                properties:
+                  result:
+                   type: string
+
+  /profile/{profile_id}/friends/:
+    get:
+      tags:
+        - friend
+      summary: Get all friends of a profile
+      operationId: getFriends
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  friends:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        email:
+                          type: string
+                        age:
+                          type: integer
+                          example: 11
+
+  /profile/{profile_id}/:
+    get:
+      tags:
+        - profile
+      summary: Get a profile
+      operationId: getProfile
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_name:
+                   type: string
+                  second_name:
+                   type: string
+                  description:
+                   type: string
+                  status:
+                   type: string
+                  posts:
+                   type: array
+                   items:
+                     type: object
+                  friends:
+                   type: array
+                   items:
+                     type: object
+                   maxItems: 6
+
+  /profile/{profile_id}/post/:
+    post:
+      tags:
+        - post
+      summary: Publish a post
+      operationId: publishPost
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                category:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                   type: string
+                media_urls:
+                  type: array
+                  items:
+                   type: string
+      responses:
+        '200':
+          description: Post published successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                   type: integer
+                  text:
+                   type: string
+                  category:
+                   type: array
+                   items:
+                     type: object
+                     properties:
+                       category_fields:
+                         type: string
+                  tags:
+                   type: array
+                   items:
+                     type: object
+                     properties:
+                       tag_fields:
+                         type: string
+                  media_urls:
+                   type: array
+                   items:
+                     type: string
+                  status:
+                   type: string
+
+  /profile/{profile_id}/post/media:
+    post:
+      tags:
+        - post
+      summary: Upload media files for posts
+      operationId: uploadMediaFiles
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                post_id:
+                  type: string
+                media:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                     name:
+                       type: string
+                     url:
+                       type: string
+      responses:
+        '200':
+          description: Media files uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  media_urls:
+                    type: array
+                    items:
+                     type: string
+
+  /profile/{profile_id}/posts/:
+    get:
+      tags:
+        - post
+      summary: View posts
+      operationId: viewPostFeed
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Posts viewed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                     type: object
+                     properties:
+                       id:
+                         type: integer
+                       text:
+                         type: string
+                       category:
+                         type: array
+                         items:
+                           type: object
+                           properties:
+                             category_fields:
+                               type: string
+                       tags:
+                         type: array
+                         items:
+                           type: object
+                           properties:
+                             tag_fields:
+                               type: string
+                       media_urls:
+                         type: array
+                         items:
+                           type: string
+                       status:
+                         type: string
+
+  /profile/{profile_id}/chats/:
+    get:
+      tags:
+        - chat
+      summary: View user chats
+      operationId: viewUserChats
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chats viewed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chats:
+                    type: array
+                    items:
+                     type: object
+                     properties:
+                       id:
+                         type: string
+                       chat_type:
+                         type: string
+                       users_id:
+                         type: array
+                         items:
+                           type: string
+                       last_messages:
+                         type: array
+                         items:
+                           type: object
+                           properties:
+                             messages_fields:
+                               type: string
+                       media_urls:
+                         type: array
+                         items:
+                           type: string
+                       status:
+                         type: string
+
+  /profile/{profile_id}/chat/{chat_id}/messages:
+    post:
+      tags:
+        - chat
+      summary: Send messages in chats
+      operationId: sendChatMessage
+      parameters:
+        - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                reply_to:
+                  type: integer
+                media_urls:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                     name:
+                       type: string
+                     url:
+                       type: string
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chats:
+                    type: array
+                    items:
+                     type: object
+                     properties:
+                       id:
+                         type: string
+                       chat_type:
+                         type: string
+                       users_id:
+                         type: array
+                         items:
+                           type: string
+                       last_messages:
+                         type: array
+                         items:
+                           type: object
+                           properties:
+                             messages_fields:
+                               type: string
+                       media_urls:
+                         type: array
+                         items:
+                           type: string
+                       status:
+                         type: string
+
+  /user/{user_id}/chat/{chat_id}/messages:
+    get:
+      tags:
+       - chat
+      summary: Read messages in chats
+      operationId: readChatMessages
+      parameters:
+       - name: user_id
+         in: path
+         required: true
+         schema:
+           type: string
+       - name: chat_id
+         in: path
+         required: true
+         schema:
+           type: string
+      responses:
+       '200':
+         description: Messages read successfully
+         content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 messages:
+                   type: array
+                   items:
+                     type: object
+                     properties:
+                      id:
+                        type: integer
+                      reply_id:
+                        type: integer
+                      user_id:
+                        type: array
+                        items:
+                          type: string
+                      text:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            messages_fields:
+                              type: string
+                      media_urls:
+                        type: array
+                        items:
+                          type: string
+                      status:
+                        type: string

@@ -1,6 +1,11 @@
-// Use DBML to define your database structure
-// Docs: https://dbml.dbdiagram.io/docs
+// Replication:
+// - master-slave (one sync + async) I
+// - replication factor 3
+//
+// Sharding:
+// - key based by user_id
 
+// Сущности:
 // - анкеты людей (имя, описание, фото, город,
 //   интересы);
 // - посты (описание, медиа, хэштеги, лайки,
@@ -26,7 +31,7 @@ Table follows {
   followed_id integer
   created_at timestamp
 }
-Table loves {
+Table relationship {
   loving_id integer
   loved_id integer
   created_at timestamp

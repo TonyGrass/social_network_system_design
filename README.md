@@ -16,6 +16,4 @@ System design of a social network for an educational course - [System Design by 
 
 Описание эндпоинтов представлено в соответствиии с спецификацией OpenAPI в файле /api/rest_api.yml.
 
-Скопируйте содержимое файла в [Swagger Online Editor](https://editor.swagger.io/) и будьте готовы испытать невероятные ощущения от соприкосновения с моим творчеством.
-
-P.S.: там будут ошибки, нажмите кнопку HIDE :)
+Скопируйте содержимое файла в [Swagger Online Editor](https://editor.swagger.io/)

@@ -1,21 +1,3 @@
-// Replication:
-// - master-slave (one sync + async) I
-// - replication factor 3
-//
-// Sharding:
-// - key based by user_id
-
-// Сущности:
-// - анкеты людей (имя, описание, фото, город,
-//   интересы);
-// - посты (описание, медиа, хэштеги, лайки,
-//   просмотры, комментарии);
-// - личные сообщения и чаты (только текст и
-//   прочитанность сообщений);
-// - отношения (друзья, подписчики, любовные
-//   отношения);
-// - медиа (фото, аудио, видео).
-
 Table users {
   id integer [primary key]
   name varchar
@@ -27,18 +9,22 @@ Table users {
 }
 
 Table follows {
+  id integer [primary key]
   following_id integer
   followed_id integer
   created_at timestamp
 }
 Table relationship {
-  loving_id integer
-  loved_id integer
+  id integer [primary key]
+  user_id integer
+  related_user_id integer
+  relationship_type integer
   created_at timestamp
 }
 Table friends {
-  friend1_id integer
-  friend2_id integer
+  id integer [primary key]
+  user_id integer
+  friend_id integer
   created_at timestamp
 }
 
@@ -65,7 +51,7 @@ Table posts {
   id integer [primary key]
   user_id integer
   description text
-  media integer [note: 'Link to content']
+  media url [note: 'Link to content']
   likes integer
   views integer
   created_at timestamp
@@ -89,7 +75,14 @@ Table comments {
   created_at timestamp
 }
 
-table some_media_store {
+Table likes {
+  id integer [primary key]
+  user_id integer
+  post_id integer
+  comment_id integer
+}
+
+table s3_media_store {
   id integer [primary key]
   data media
 }
@@ -109,10 +102,11 @@ Ref: users.id < messages.user_id
 
 Ref: users.id < follows.following_id
 Ref: users.id < follows.followed_id
-Ref: users.id < loves.loving_id
-Ref: users.id < loves.loved_id
-Ref: users.id < friends.friend1_id
-Ref: users.id < friends.friend2_id
+Ref: users.id < relationship.user_id
+Ref: users.id < relationship.related_user_id
+Ref: users.id < friends.user_id
+Ref: users.id < friends.friend_id
 
-Ref: posts.media - some_media_store.id
-Ref: users.photo - some_media_store.id
+Ref: users.id < likes.user_id
+Ref: posts.id < likes.post_id
+Ref: comments.id < likes.id

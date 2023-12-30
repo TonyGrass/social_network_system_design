@@ -220,7 +220,7 @@ paths:
                   status:
                    type: string
 
-  /profile/{profile_id}/post/media:
+  /profile/{profile_id}/{post_id}/media:
     post:
       tags:
         - post
@@ -228,6 +228,11 @@ paths:
       operationId: uploadMediaFiles
       parameters:
         - name: profile_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: post_id
           in: path
           required: true
           schema:
@@ -265,7 +270,7 @@ paths:
                     items:
                      type: string
 
-  /profile/{profile_id}/posts/:
+  /profile/{profile_id}/feed/posts/:
     get:
       tags:
         - post

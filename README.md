@@ -4,7 +4,7 @@ System design of a social network for an educational course -
 
 ---
 
-Содержание:
+Contents:
 - [REST API](#api) 
 - [Databases](#db)
 - [Functional and non-functional requirements](#req)
@@ -15,24 +15,28 @@ System design of a social network for an educational course -
 ## REST API
 
 ---
-Перечень операций API:
-- добавление и удаление друзей;
-- просмотр друзей пользователя;
-- просмотр анкеты пользователя;
-- публикация поста в ленту;
-- загрузка медиа файлов для постов;
-- просмотр ленты постов (*домашней и пользователей)*;
-- просмотр диалогов и чатов пользователя;
-- отправка и чтение сообщений в диалогах и чатах.
+List of API operations:
+- adding and removing friends;
+- view the user's friends;
+- viewing the user profile;
+- posting a post to the feed;
+- uploading media files for posts;
+- view the feed of posts (*home and users)*;
+- view user's dialogs and chats;
+- Sending and reading messages in dialogues and chats.
 
-Визуализация REST API в соответствии с OpenAPI Specification(Swagger):
+Visualization of the REST API in accordance with the Open API Specification(Swagger):
+- [API presented as a yml file for Swagger](#api/rest_api.yml)
 
-- [API представленное в виде yaml файла для Swagger](#api/rest_api.yml)
+Use [Swagger Online Editor](https://editor.swagger.io) for easy viewing API, 
+or [screenshots](#api/) in service directories.
 
 <a id="db"></a>
 ## Database
-Используйте [dbdiagram](https://dbdiagram.io/home) для удобного изучения 
-структур баз данных, либо [скриншоты](#architecture/) в директориях сервисов.
+- [Services database structures](#architecture/)
+
+Use [dbdiagram](https://dbdiagram.io/home ) for easy viewing
+of , or [screenshots](#architecture/) in service directories.
 
 Replication, sharding and partitioning are as below, 
 if the opposite is not specified.
@@ -50,82 +54,82 @@ Partitioning:
 - For storage cold data on HDD and hot data on SSD **messages** and **posts** partition by created_at
 
 <a id="req"></a>
-## Требования учтенные при проектировании:
+## Requirements applied in the design:
 
 ---
-##### Функциональные требования:
-- личные сообщения и чаты (текст и медиа),
-- прочитанность сообщений,
-- публикация постов в ленту (текст и медиа),
-- добавление друзей, 
-- добавление отношений, 
-- добавление подписок,
-- добавление анкеты пользователя.
+##### Functional requirements:
+- private messages and chats (text and media),
+- readability of messages,
+- publication of posts in the feed (text and media),
+- adding friends,
+- adding relationships,
+- adding subscriptions,
+- adding a user profile.
 
-##### Нефункциональные требования:
-- 50 000 000 DAU,
-- Availability 99,95%,
-- Cообщения всегда сохраняются,
-- Response time на отправку - 1 секунда,
-- Response time на получение - 5 секунд,
-- Максимальный размер сообщения - 4096 символов,
-- Максимальный размер медиа - 2 гб,
-- В среднем пользователь:
-  - Читает сообщения 10 раз в день,
-  - Пишет сообщения 2 раз в день,
-  - Скачивает медиа 1 раз в день,
-  - Загружает медиа 1 раз в неделю,
-  - Читает посты 10 раз в день,
-  - Пишет пост 1 раз в неделю,
-  - Средний размер медиа - 1 МБ,
-- Данные должны храниться 5 лет,
-- Геораспределенность на центральный и восточный регион России,
-- Сезонности нет.
+##### Non-functional requirements:
+- 50,000,000 DAU,
+- Availability 99.95%,
+- Messages are always saved,
+- The response time for sending is 1 second,
+- The response time to turn on is 5 seconds,
+- The maximum message size is 4096 characters,
+- The maximum media size is 2 GB,
+- The average user:
+- Reads messages 10 times a day,
+- Writes messages 2 times a day,
+- Downloads media 1 time per day,
+- Downloads media 1 time per week,
+- Reads posts 10 times a day,
+- Writes a post 1 time a week,
+- The average media size is 1 MB,
+- The data must be stored for 5 years,
+- Geo-distribution to the central and eastern regions of Russia,
+- There is no seasonality.
 
 <a id="calc"></a>
 ## Calculation:
 
 ---
     DAU = 50 000 000
-    Рассчетное время хранения данных = 5 лет
-    Фактор репликации = 3
+    Data retention = 5 years
+    Replication factor  = 3
 
-RPS и traffic работы с сообщениями (отправка/чтение):
+RPS and traffic of working with messages (sending/reading):
 
-    В среднем юзер читает сообщения 10 раз в день, пишет 2 раза в день
-    RPS(read) = 50 000 000 * 10 / 86 400 ~= 5800 r/с
-    RPD(write) = 50 000 000 * 2 / 86 400 ~= 1200 r/с
+    On average, a user reads messages 10 times a day, writes 2 times a day
+    RPS(read) = 50 000 000 * 10 / 86 400 ~= 5800 r/s
+    RPD(write) = 50 000 000 * 2 / 86 400 ~= 1200 r/s
 
-    traffic_per_second(write) = 1200 * 4096 * 2 Б = 10 МБ/с  
-    traffic_per_year(write) =  10 * 86400 * 365 = 315 ТБ/год
+    traffic_per_second(write) = 1200 * 4096 * 2 B = 10 MB/s  
+    traffic_per_year(write) =  10 * 86400 * 365 = 315 TB/year
 
-    message_required_memory = 315 * 5 * 3 = 5 ПБ
+    message_required_memory = 315 * 5 * 3 = 5 PB
 
-RPS и traffic работы с медиа (отправка/чтение):
+RPS and traffic of working with media (sending/reading):
 
-    В среднем юзер скачивает медиа 1 раз в день, загружает 1 раз в неделю
+    On average, a user downloads media 1 time a day, downloads 1 time a week
     RPS(read) = 50 000 000 * 1 / 86 400 ~= 580 r/s
     RPD(write) = 50 000 000 * 1 / 7 / 86 400 ~= 85 r/s
 
-    traffic_per_second(write) = 85 * 1 МБ = 85 МБ/с  
-    traffic_per_year(write) =  85 * 86400 * 365 = 3 ПБ/год
+    traffic_per_second(write) = 85 * 1 MB = 85 MB/s  
+    traffic_per_year(write) =  85 * 86400 * 365 = 3 PB/year
 
-    media_required_memory = 3 * 5 * 3= 45 ПБ
+    media_required_memory = 3 * 5 * 3= 45 PB
 
-RPS и traffic работы с постами (отправка/чтение):
+RPS and traffic of working with posts (sending/reading):
 
-    В среднем юзер читает посты 10 раз в день, пишет 1 раз в неделю
-    RPS(read) = 50 000 000 * 10 / 86 400 ~= 5800 r/с
-    RPD(write) = 50 000 000 * 1 / 7 / 86 400 ~= 85 r/с
+    On average, a user reads posts 10 times a day, writes 1 time a week
+    RPS(read) = 50 000 000 * 10 / 86 400 ~= 5800 r/s
+    RPD(write) = 50 000 000 * 1 / 7 / 86 400 ~= 85 r/s
 
-    traffic_per_second(write) = 85 * 4096 * 2 Б = 1 МБ/с  
-    traffic_per_year(write) =  1 * 86400 * 365 = 31 ТБ/год
+    traffic_per_second(write) = 85 * 4096 * 2 B = 1 MB/s  
+    traffic_per_year(write) =  1 * 86400 * 365 = 31 TB/year
 
-    post_required_memory = 31 * 5 * 3= 500 ТБ
+    post_required_memory = 31 * 5 * 3= 500 TB
 
-Итого суммарно необходимо памяти:
+Total memory required:
 
-    required_memory = 5 ПБ + 45 ПБ + 500 ТБ = 50,5 ПБ
+    required_memory = 5 PB + 45 PB + 500 TB = 50,5 PB
 
 <a id="calc"></a>
 ## Top-level design:

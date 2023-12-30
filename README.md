@@ -31,6 +31,9 @@ System design of a social network for an educational course -
 
 <a id="db"></a>
 ## Database
+Используйте [dbdiagram](https://dbdiagram.io/home) для удобного изучения 
+структур баз данных, либо [скриншоты](#architecture/) в директориях сервисов.
+
 Replication, sharding and partitioning are as below, 
 if the opposite is not specified.
 
@@ -128,3 +131,37 @@ RPS и traffic работы с постами (отправка/чтение):
 ## Top-level design:
 
 ---
+
+### C1 level:
+![c1_level.png](architecture%2Fpuml_containers%2Fimages%2Fc1_level.png)
+
+---
+
+### C2 level:
+-  #### Post service
+![post_service.png](architecture%2Fpuml_containers%2Fimages%2Fpost_service.png)
+
+---
+
+-  #### Feed service
+![feed_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeed_service.png)
+
+---
+
+-  #### Message service
+![message_service.png](architecture%2Fpuml_containers%2Fimages%2Fmessage_service.png)
+
+---
+
+-  #### User service
+![user_service.png](architecture%2Fpuml_containers%2Fimages%2Fuser_service.png)
+
+---
+
+-  #### Feedback service
+![feedback_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeedback_service.png)
+
+---
+
+-  #### Media service
+![media_service.png](architecture%2Fpuml_containers%2Fimages%2Fmedia_service.png)

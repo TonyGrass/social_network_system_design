@@ -26,17 +26,17 @@ List of API operations:
 - Sending and reading messages in dialogues and chats.
 
 Visualization of the REST API in accordance with the Open API Specification(Swagger):
-- [API presented as a yml file for Swagger](#api/rest_api.yml)
+- [API presented as a yml file for Swagger](api/rest_api.yml)
 
 Use [Swagger Online Editor](https://editor.swagger.io) for easy viewing API, 
-or [screenshots](#api/) in service directories.
+or [screenshots](#api/) in api directories.
 
 <a id="db"></a>
 ## Database
-- [Services database structures](#architecture/)
+- [Services database structures](architecture/)
 
 Use [dbdiagram](https://dbdiagram.io/home ) for easy viewing
-of , or [screenshots](#architecture/) in service directories.
+of , or [screenshots](architecture/) in architecture directories.
 
 Replication, sharding and partitioning are as below, 
 if the opposite is not specified.
@@ -114,7 +114,7 @@ RPS and traffic of working with media (sending/reading):
     traffic_per_second(write) = 85 * 1 MB = 85 MB/s  
     traffic_per_year(write) =  85 * 86400 * 365 = 3 PB/year
 
-    media_required_memory = 3 * 5 * 3= 45 PB
+    media_required_memory = 3 * 5 * 3 = 45 PB
 
 RPS and traffic of working with posts (sending/reading):
 
@@ -131,10 +131,13 @@ Total memory required:
 
     required_memory = 5 PB + 45 PB + 500 TB = 50,5 PB
 
-<a id="calc"></a>
+<a id="design"></a>
 ## Top-level design:
 
 ---
+
+Use [PlantUML Online Editor](http://www.plantuml.com/plantuml/uml/) for easy viewing
+of , or [screenshots](architecture/puml_containers/images) in containers directories.
 
 ### C1 level:
 ![c1_level.png](architecture%2Fpuml_containers%2Fimages%2Fc1_level.png)
@@ -142,30 +145,30 @@ Total memory required:
 ---
 
 ### C2 level:
--  #### Post service
+-  #### [Post service](architecture/puml_containers)
 ![post_service.png](architecture%2Fpuml_containers%2Fimages%2Fpost_service.png)
 
 ---
 
--  #### Feed service
+-  #### [Feed service](architecture/puml_containers)
 ![feed_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeed_service.png)
 
 ---
 
--  #### Message service
+-  #### [Message service](architecture/puml_containers)
 ![message_service.png](architecture%2Fpuml_containers%2Fimages%2Fmessage_service.png)
 
 ---
 
--  #### User service
+-  #### [User service](architecture/puml_containers)
 ![user_service.png](architecture%2Fpuml_containers%2Fimages%2Fuser_service.png)
 
 ---
 
--  #### Feedback service
+-  #### [Feedback service](architecture/puml_containers)
 ![feedback_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeedback_service.png)
 
 ---
 
--  #### Media service
+-  #### [Media service](architecture/puml_containers)
 ![media_service.png](architecture%2Fpuml_containers%2Fimages%2Fmedia_service.png)

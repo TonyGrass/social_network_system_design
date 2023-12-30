@@ -140,6 +140,7 @@ Use [PlantUML Online Editor](http://www.plantuml.com/plantuml/uml/) for easy vie
 of , or [screenshots](architecture/puml_containers/images) in containers directories.
 
 ### C1 level:
+- #### [All services](architecture/puml_containers)
 ![c1_level.png](architecture%2Fpuml_containers%2Fimages%2Fc1_level.png)
 
 ---

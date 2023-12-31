@@ -29,32 +29,32 @@ Visualization of the REST API in accordance with the Open API Specification(Swag
 - [API presented as a yml file for Swagger](api/rest_api.yml)
 
 Use [Swagger Online Editor](https://editor.swagger.io) for easy viewing API, 
-or [screenshots](#api/) in api directories.
+or [screenshots](#api/) in api directory.
 
 <a id="db"></a>
 ## Database
-- [Services database structures](architecture/)
+- [Services database structures](architecture/services_db)
 
 Use [dbdiagram](https://dbdiagram.io/home ) for easy viewing
-of , or [screenshots](architecture/) in architecture directories.
+of, or [screenshots](architecture/services_db) in _architecture/services_db/_ directories.
 
 Replication, sharding and partitioning are as below, 
 if the opposite is not specified.
 
 Replication:
-- replication factor 3
-- master-slave (one sync + 2 async)
+- replication factor 3,
+- master-slave (one sync + 2 async),
 - leader election to choose a new master.
 
 Sharding:
-- **key based** by **user_id** to avoid multishard user requests
+- **key based** by **user_id** to avoid multishard user requests.
 
 Partitioning:
 
-- For storage cold data on HDD and hot data on SSD **messages** and **posts** partition by created_at
+- For storage cold data on HDD and hot data on SSD **messages** and **posts** partition by created_at.
 
 <a id="req"></a>
-## Requirements applied in the design:
+## Requirements applied for the design:
 
 ---
 ##### Functional requirements:
@@ -90,9 +90,9 @@ Partitioning:
 ## Calculation:
 
 ---
-    DAU = 50 000 000
-    Data retention = 5 years
-    Replication factor  = 3
+    DAU = 50 000 000,
+    Data retention = 5 years,
+    Replication factor  = 3.
 
 RPS and traffic of working with messages (sending/reading):
 
@@ -137,39 +137,39 @@ Total memory required:
 ---
 
 Use [PlantUML Online Editor](http://www.plantuml.com/plantuml/uml/) for easy viewing
-of , or [screenshots](architecture/puml_containers/images) in containers directories.
+of, or [screenshots](architecture/с4_design) in _architecture/с4_design/_ directories.
 
 ### C1 level:
-- #### [All services](architecture/puml_containers)
-![c1_level.png](architecture%2Fpuml_containers%2Fimages%2Fc1_level.png)
+- #### [All services](architecture/с4_design/c1_level)
+![screen_c1_level.png](architecture%2F%D1%814_design%2Fc1_level%2Fscreen_c1_level.png)
 
 ---
 
 ### C2 level:
--  #### [Post service](architecture/puml_containers)
-![post_service.png](architecture%2Fpuml_containers%2Fimages%2Fpost_service.png)
+-  #### [Post service](architecture/с4_design/c2_level/post_service)
+![screen_post_service.png](architecture%2F%D1%814_design%2Fc2_level%2Fpost_service%2Fscreen_post_service.png)
 
 ---
 
--  #### [Feed service](architecture/puml_containers)
-![feed_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeed_service.png)
+-  #### [Feed service](architecture/с4_design/c2_level/feed_service)
+![screen_feed_service.png](architecture%2F%D1%814_design%2Fc2_level%2Ffeed_service%2Fscreen_feed_service.png)
 
 ---
 
--  #### [Message service](architecture/puml_containers)
-![message_service.png](architecture%2Fpuml_containers%2Fimages%2Fmessage_service.png)
+-  #### [Message service](architecture/с4_design/c2_level/message_service)
+![screen_message_service.png](architecture%2F%D1%814_design%2Fc2_level%2Fmessage_service%2Fscreen_message_service.png)
 
 ---
 
--  #### [User service](architecture/puml_containers)
-![user_service.png](architecture%2Fpuml_containers%2Fimages%2Fuser_service.png)
+-  #### [User service](architecture/с4_design/c2_level/user_service)
+![screen_user_service.png](architecture%2F%D1%814_design%2Fc2_level%2Fuser_service%2Fscreen_user_service.png)
 
 ---
 
--  #### [Feedback service](architecture/puml_containers)
-![feedback_service.png](architecture%2Fpuml_containers%2Fimages%2Ffeedback_service.png)
+-  #### [Feedback service](architecture/с4_design/c2_level/feedback_service)
+![screen_feedback_service.png](architecture%2F%D1%814_design%2Fc2_level%2Ffeedback_service%2Fscreen_feedback_service.png)
 
 ---
 
--  #### [Media service](architecture/puml_containers)
-![media_service.png](architecture%2Fpuml_containers%2Fimages%2Fmedia_service.png)
+-  #### [Media service](architecture/с4_design/c2_level/media_service)
+![screen_media_service.png](architecture%2F%D1%814_design%2Fc2_level%2Fmedia_service%2Fscreen_media_service.png)
